@@ -7,6 +7,7 @@
       v-on:input="cep = $event.target.value"
       v-on:keydown="receberCep()"
       class="input-cep"
+      maxlength="8"
     />
     <span v-show="status">
       <table style="width: 100%; border: 1px solid black">
