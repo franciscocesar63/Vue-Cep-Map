@@ -4,13 +4,21 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/sobre">Sobre</router-link>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
+<script>
+export default {
+  metaInfo: {
+    title: 'Busca CEP - OpenStreetMap + GeocodeAPI',
+
+
+  },
+};
+</script>
+
 <style>
-
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -31,6 +39,4 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-
-
 </style>
