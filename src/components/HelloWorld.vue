@@ -27,35 +27,73 @@
           <td>{{ dados.uf }}</td>
         </tr>
       </table>
-
-      <GmapMap
-        :center="{ lat: 10, lng: 10 }"
-        :zoom="2"
-        map-type-id="terrain"
-        style="width: 100%; height: 350px"
-      >
-        <GmapMarker
-          :key="index"
-          v-for="(m, index) in markers"
-          :position="m.position"
-          :clickable="true"
-          :draggable="true"
-          @click="center = m.position"
-        />
-      </GmapMap>
     </span>
+    <br />
+    <br />
+    <div style="height: 500px; width: 100%">
+      <l-map
+        v-if="showMap"
+        :zoom="zoom"
+        :center="center"
+        :options="mapOptions"
+        style="height: 80%"
+        @update:center="centerUpdate"
+        @update:zoom="zoomUpdate"
+      >
+        <l-tile-layer :url="url" :attribution="attribution" />
+        <l-marker :lat-lng="withPopup">
+          <l-popup>
+            <div @click="innerClick">
+              I am a popup
+              <p v-show="showParagraph">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sed
+                pretium nisl, ut sagittis sapien. Sed vel sollicitudin nisi. Donec finibus
+                semper metus id malesuada.
+              </p>
+            </div>
+          </l-popup>
+        </l-marker>
+      </l-map>
+    </div>
   </div>
 </template>
 
 <script>
+import { latLng, Icon } from "leaflet";
+import { LMap, LTileLayer, LMarker, LPopup } from "vue2-leaflet";
+delete Icon.Default.prototype._getIconUrl;
+Icon.Default.mergeOptions({
+  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+  iconUrl: require("leaflet/dist/images/marker-icon.png"),
+  shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
+});
 export default {
+  components: {
+    LMap,
+    LTileLayer,
+    LMarker,
+    LPopup,
+  },
   data() {
     return {
       cep: "",
       dados: "",
       status: false,
-      mascara: "",
-      APIKey: "AIzaSyCPgSVnpR2dG-0RYLPqfCbkmGh9iOc_bRk",
+      zoom: 14,
+      center: latLng(-6.7693946, -38.2273253),
+      url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      attribution:
+        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      withPopup: latLng(-6.7693946, -38.2273253),
+
+      currentZoom: 11.5,
+      currentCenter: latLng(-6.7693946, -38.2273253),
+      showParagraph: false,
+      mapOptions: {
+        zoomSnap: 0.5,
+      },
+      showMap: true,
+      showMarker: false,
     };
   },
 
@@ -73,7 +111,30 @@ export default {
           );
         this.status = true;
         console.log(this.srcLink);
-      } else this.status = false;
+        this.atualizarMapaCep();
+      } else {
+        this.status = false;
+        this.showMarker = false;
+      }
+    },
+    zoomUpdate(zoom) {
+      this.currentZoom = zoom;
+    },
+    centerUpdate(center) {
+      this.currentCenter = center;
+    },
+    showLongText() {
+      this.showParagraph = !this.showParagraph;
+    },
+    innerClick() {
+      alert("Click!");
+    },
+
+    atualizarMapaCep() {
+      this.center = latLng(-6.7555255, -38.2247597);
+      // this.currentCenter = latLng(-6.7555255, -38.2247597);
+      this.withPopup = latLng(-6.7555255, -38.2247597);
+      // this.showMarker = true;
     },
   },
 };
@@ -83,5 +144,9 @@ export default {
 .input-cep {
   border-radius: 5px;
   width: 250px;
+}
+.wrapper {
+  max-width: 400px;
+  margin: 0 auto;
 }
 </style>
