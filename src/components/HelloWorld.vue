@@ -132,6 +132,23 @@ export default {
     },
 
     atualizarMapaCep() {
+      if (this.cep.length > 7) {
+        let url = "https://geocep.herokuapp.com/api/" + this.cep;
+        console.log(url);
+        this.$http
+          .get(url)
+          .then((res) => res.json())
+          .then(
+            (dados) => (console.log(dados)),
+            (err) => console.log(err)
+          );
+        this.status = true;
+        console.log(this.srcLink);
+      } else {
+        this.status = false;
+        this.showMarker = false;
+      }
+
       this.center = latLng(-6.7555255, -38.2247597);
       // this.currentCenter = latLng(-6.7555255, -38.2247597);
       this.withPopup = latLng(-6.7555255, -38.2247597);
