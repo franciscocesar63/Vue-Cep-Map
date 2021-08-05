@@ -67,7 +67,8 @@
       <b-row>
         <b-col>
           <b-list-group>
-            <b-list-group-item button @click="alterarDescricao(2)"
+            <b-list-group-item button 
+            @click="alterarDescricao(2)"
               >Sovis - Dez/2020 - <b>ATUAL</b></b-list-group-item
             >
             <b-list-group-item button @click="alterarDescricao(1)"
