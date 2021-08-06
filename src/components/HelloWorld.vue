@@ -79,6 +79,7 @@ export default {
     return {
       cep: "",
       dados: "",
+      dadosLatLong: "",
       status: false,
       zoom: 14,
       center: latLng(-6.7693946, -38.2273253),
@@ -131,27 +132,31 @@ export default {
       alert("Click!");
     },
 
-    atualizarMapaCep() {
+    async atualizarMapaCep() {
       if (this.cep.length > 7) {
         let url = "https://geocep.herokuapp.com/api/" + this.cep;
+
         console.log(url);
-        this.$http
+        await this.$http
           .get(url)
           .then((res) => res.json())
           .then(
-            (dados) => (console.log(dados)),
+            (dados) => (this.dadosLatLong = dados),
             (err) => console.log(err)
           );
         this.status = true;
-        console.log(this.srcLink);
+        console.log(this.dadosLatLong);
+        this.withPopup = latLng(this.dadosLatLong.latitude, this.dadosLatLong.longitude);
+        this.center = latLng(this.dadosLatLong.latitude, this.dadosLatLong.longitude);
+       
+
       } else {
         this.status = false;
         this.showMarker = false;
       }
 
-      this.center = latLng(-6.7555255, -38.2247597);
+      // this.center = latLng(-6.7555255, -38.2247597);
       // this.currentCenter = latLng(-6.7555255, -38.2247597);
-      this.withPopup = latLng(-6.7555255, -38.2247597);
       // this.showMarker = true;
     },
   },

@@ -15,6 +15,7 @@
     "@fortawesome/vue-fontawesome": "^2.0.2",
     "@growthbunker/vuesocial": "^0.1.2",
     "@syncfusion/ej2-vue-maps": "^19.2.44",
+    "axios": "^0.21.1",
     "bootstrap": "^5.1.0",
     "core-js": "^3.6.5",
     "leaflet": "^1.7.1",
