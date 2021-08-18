@@ -1,19 +1,20 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/sobre">Sobre</router-link>
+    <div>
+      <Sidebar />
     </div>
     <router-view />
   </div>
 </template>
 
 <script>
+import Sidebar from "./components/Sidebar.vue";
 export default {
+  components: {
+    Sidebar,
+  },
   metaInfo: {
-    title: 'Busca CEP - OpenStreetMap + GeocodeAPI',
-
-
+    title: "Busca CEP - OpenStreetMap + GeocodeAPI",
   },
 };
 </script>

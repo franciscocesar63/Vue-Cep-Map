@@ -1,12 +1,13 @@
 <template>
   <div>
+    <img src="../assets/viacep.png" alt="Via Cep" class="mt-3"><br/>
     <input
       type="text"
       v-bind:id="cep"
       placeholder="Digite seu Cep"
       v-on:input="cep = $event.target.value"
       v-on:keydown="receberCep()"
-      class="input-cep"
+      class="input-cep mt-3 mb-3"
       maxlength="8"
     />
     <span v-show="status">
@@ -55,6 +56,9 @@
           </l-popup>
         </l-marker>
       </l-map>
+    </div>
+    <div class="footer mb-3">
+      <h5>O projeto foi criado por Francisco César e Pedro Henrique</h5>
     </div>
   </div>
 </template>
